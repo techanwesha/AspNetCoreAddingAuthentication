@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
+
 namespace WishList.Models
 {
     public class Item
@@ -9,5 +10,6 @@ namespace WishList.Models
         [Required]
         [MaxLength(50)]
         public string Description { get; set; }
+        public virtual ApplicationUser User { get; set; }
     }
 }
