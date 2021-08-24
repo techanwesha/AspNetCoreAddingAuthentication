@@ -9,7 +9,8 @@ namespace WishList.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        [DataType(DataType.EmailAddress)]
+        //[DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required] 

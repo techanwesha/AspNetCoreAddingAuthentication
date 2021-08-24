@@ -42,27 +42,29 @@ namespace WishList.Controllers
             {
                 return View(model);
             }
-            else
-            {
+           
 
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result =  _userManager.CreateAsync(user).Result;
+               // var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result =  _userManager.CreateAsync(new ApplicationUser() { UserName = model.Email, Email = model.Email },model.Password).Result;
                 if (!result.Succeeded)
                 {
-                    foreach (var m in result.Errors)
+                    foreach (var error in result.Errors)
                     {
-                        ModelState.AddModelError("Password",m.Description);
+                        ModelState.AddModelError("Password",error.Description);
                     }
                     return View(model);
                 }
-                return RedirectToAction("Index", "Home");
-            }
+                
+                    return RedirectToAction("Index", "Home");
+               
+                
+            
         }
         [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
         {
-            return View("Login");
+            return View();
         }
 
 
@@ -76,17 +78,17 @@ namespace WishList.Controllers
             {
                 return View(model);
             }
-            else
-            {
+           
                 var result= _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false).Result;
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    return View(model);
                 }
                 
                 return RedirectToAction("Index", "Item");
-            }
+            
             
         }
 
